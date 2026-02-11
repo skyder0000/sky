@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Sky</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Inter',sans-serif;
+scroll-behavior:smooth;
+}
+
+body{
+background:#000;
+color:white;
+overflow-x:hidden;
+}
+
+section{
+min-height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+padding:40px;
+text-align:center;
+}
+
+h1{
+font-size:3.5rem;
+font-weight:700;
+letter-spacing:-1px;
+}
+
+p{
+max-width:700px;
+margin-top:20px;
+font-size:1.2rem;
+color:#ccc;
+line-height:1.8;
+}
+
+.hero{
+background:radial-gradient(circle at center,#111,#000);
+}
+
+/* Slider container */
+.slider{
+    position:relative;
+    width:100%;
+    max-width:800px;
+    height:450px;
+    overflow:hidden;
+    margin:40px auto;
+    border-radius:20px;
+    box-shadow:0 0 30px rgba(255,192,203,0.5); /* soft pink glow */
+}
+
+/* Each slide */
+.slide{
+    position:absolute;
+    width:100%;
+    height:100%;
+    opacity:0;
+    transition:opacity 2s ease-in-out;
+}
+
+.slide img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    border-radius:20px;
+    transform:scale(1.1);
+    transition:transform 10s linear;
+}
+
+/* Active slide */
+.slide.active{
+    opacity:1;
+}
+
+.slide.active img{
+    transform:scale(1); /* slow zoom out for cinematic effect */
+}
+
+
+.fade-in{
+opacity:0;
+transform:translateY(40px);
+transition:1.5s ease;
+}
+
+.fade-in.visible{
+opacity:1;
+transform:translateY(0);
+}
+
+.timeline{
+position:relative;
+max-width:800px;
+margin-top:50px;
+}
+
+.timeline::after{
+content:'';
+position:absolute;
+width:2px;
+background:#444;
+top:0;
+bottom:0;
+left:50%;
+margin-left:-1px;
+}
+
+.timeline-item{
+padding:20px 40px;
+position:relative;
+width:50%;
+}
+
+.timeline-item.left{left:0;}
+.timeline-item.right{left:50%;}
+
+.timeline-item::before{
+content:'';
+position:absolute;
+width:15px;
+height:15px;
+right:-8px;
+background:white;
+border-radius:50%;
+top:25px;
+}
+
+.timeline-item.right::before{
+left:-8px;
+}
+
+button{
+margin-top:30px;
+padding:12px 30px;
+border-radius:50px;
+border:1px solid white;
+background:transparent;
+color:white;
+cursor:pointer;
+transition:0.4s;
+}
+
+button:hover{
+background:white;
+color:black;
+}
+
+.hidden-letter{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:#000;
+display:none;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+padding:30px;
+text-align:center;
+z-index:999;
+}
+
+input{
+padding:10px;
+margin-top:15px;
+border-radius:30px;
+border:none;
+text-align:center;
+}
+
+footer{
+padding:40px;
+color:#555;
+}
+
+canvas{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    z-index:-2; /* behind content */
+}
+
+#kitkatStars{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    pointer-events:none; /* clicks pass through */
+    z-index:-1; /* above canvas stars but behind content */
+}
+.kitkatStar{
+    position:absolute;
+    width:20px; /* adjust size */
+    height:20px;
+    pointer-events:none;
+    opacity:0.5; /* twinkle effect */
+    animation:float 8s linear infinite;
+}
+
+@keyframes float{
+    0%{transform: translateY(0) rotate(0deg);}
+    50%{transform: translateY(-200px) rotate(180deg);}
+    100%{transform: translateY(-400px) rotate(360deg);}
+}
+
+
+</style>
+</head>
+
+<body>
+
+<canvas id="stars"></canvas>
+<div id="kitkatStars"></div>
+
+<section class="hero">
+<h1 class="fade-in">Happy Valentine's day Sky.</h1>
+<p class="fade-in">From a random Discord server...  
+to being paracetamol of my life.</p>
+<button onclick="scrollToSection()">Begin Our Story</button>
+</section>
+
+<section>
+<h1 class="fade-in">Your Voice.</h1>
+<p class="fade-in">
+I haven’t held your hand yet.  
+But I’ve memorized your silence. Sweetness of your voice makes me
+feel like 
+I have nothing to achieve in this life.
+And your laugh feels like home.
+</p>
+</section>
+
+<section>
+<h1 class="fade-in">Our Timeline</h1>
+
+<div class="timeline">
+
+<div class="timeline-item left fade-in">
+<h3>First Call</h3>
+<p>Two strangers. One voice. Zero idea what was about to begin.</p>
+</div>
+
+<div class="timeline-item right fade-in">
+<h3>Late Night Talks</h3>
+<p>Different countries. Same moon. Same feeling.</p>
+</div>
+
+<div class="timeline-item left fade-in">
+<h3>Sharing Photos</h3>
+<p>You trusted me with your smile. I kept it safe.</p>
+</div>
+
+<div class="timeline-item right fade-in">
+<h3>Now</h3>
+<p>Still far. Still choosing each other.</p>
+</div>
+
+</div>
+
+</section>
+
+<section>
+<h1 class="fade-in">A Moment 📸</h1>
+<p class="fade-in">Thanks to ChatGPT… even miles apart, we become close.</p>
+
+<div class="slider fade-in">
+    <div class="slide">
+        <img src="photo1.jpeg" alt="Sky 1">
+    </div>
+    
+</div>
+</section>
+
+
+<section>
+<h1 class="fade-in">Distance</h1>
+<p class="fade-in">
+Nepal 🇳🇵 ❤️ Indonesia 🇮🇩  
+Thousands of kilometers.  
+Zero doubt.
+</p>
+<button onclick="openLetter()">Unlock Something Private</button>
+</section>
+
+<div class="hidden-letter" id="letterBox">
+<h1>Only for Sky</h1>
+<p>Enter our secret word.</p>
+<input type="password" id="secretInput" placeholder="Secret">
+<button onclick="checkSecret()">Unlock</button>
+<p id="wrongMsg" style="margin-top:10px;color:red;"></p>
+<div id="realLetter" style="display:none;margin-top:30px;max-width:600px;">
+<h2>Sayangku,</h2>
+<p>
+I don’t need social media to show you off.  
+I don’t need distance to define us.  
+I just need your voice saying my name  
+at the end of a long day.  
+
+Stay with me.  
+Through time zones.  
+Through silence.  
+Through everything.
+</p>
+<p style="margin-top:20px;">— Skyder</p>
+</div>
+</div>
+
+<audio id="loveSong" loop preload="auto">
+  <source src="givemeforever.mp3" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
+
+<button id="musicToggle" style="position:fixed;top:20px;right:20px;padding:10px 20px;border-radius:50px;border:none;background:pink;color:white;cursor:pointer;z-index:1000;">Play Music</button>
+
+
+<footer>
+Made with ❤️ by your sayang.
+</footer>
+
+<script>
+
+// Smooth scroll
+function scrollToSection(){
+window.scrollBy({top:window.innerHeight,behavior:'smooth'});
+}
+
+// Fade-in on scroll
+const faders=document.querySelectorAll('.fade-in');
+const appearOptions={threshold:0.3};
+const appearOnScroll=new IntersectionObserver(function(entries,observer){
+entries.forEach(entry=>{
+if(!entry.isIntersecting) return;
+entry.target.classList.add('visible');
+observer.unobserve(entry.target);
+});
+},appearOptions);
+
+faders.forEach(fader=>{appearOnScroll.observe(fader);});
+
+// Hidden letter
+function openLetter(){
+document.getElementById("letterBox").style.display="flex";
+}
+
+function checkSecret(){
+    // Using .toLowerCase() makes it easier for her to get it right!
+    const secret = document.getElementById("secretInput").value.toLowerCase();
+    
+    if(secret === "ilovesky"){
+        // 1. Show the letter
+        document.getElementById("realLetter").style.display = "block";
+        // 2. Make the error message disappear
+        document.getElementById("wrongMsg").innerText = ""; 
+        // Optional: Hide the input and button too for a cleaner look
+        document.getElementById("secretInput").style.display = "none";
+        event.target.style.display = "none"; 
+    } else {
+        document.getElementById("wrongMsg").innerText = "That's not our word.";
+    }
+}
+
+
+// Cinematic slider
+let currentSlide = 0;
+const slides = document.querySelectorAll('.slide');
+
+function showSlide(index){
+    slides.forEach((slide,i)=>{
+        slide.classList.remove('active');
+        if(i===index) slide.classList.add('active');
+    });
+}
+
+function nextSlide(){
+    currentSlide = (currentSlide +1) % slides.length;
+    showSlide(currentSlide);
+}
+
+showSlide(currentSlide);
+setInterval(nextSlide, 5000); // change slide every 5 seconds
+
+
+const canvas = document.getElementById('stars');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+// Normal twinkling stars
+class Star{
+    constructor(){
+        this.x = Math.random()*canvas.width;
+        this.y = Math.random()*canvas.height;
+        this.r = Math.random()*2+1;
+        this.opacity = Math.random()*0.5+0.5;
+        this.opacitySpeed = Math.random()*0.02+0.01;
+    }
+    draw(){
+        ctx.globalAlpha = this.opacity;
+        ctx.beginPath();
+        ctx.arc(this.x,this.y,this.r,0,Math.PI*2);
+        ctx.fillStyle="white";
+        ctx.fill();
+    }
+    update(){
+        this.opacity += this.opacitySpeed;
+        if(this.opacity>1 || this.opacity<0.3) this.opacitySpeed*=-1;
+    }
+}
+
+let stars=[];
+for(let i=0;i<100;i++) stars.push(new Star());
+
+function animateStars(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    stars.forEach(s=>{
+        s.update();
+        s.draw();
+    });
+    requestAnimationFrame(animateStars);
+}
+
+animateStars();
+
+// KitKat GIF stars
+const kitkatContainer = document.getElementById('kitkatStars');
+const kitkatURL = "kitkat.gif"; // replace with your gif
+
+let kitkatStarsArray=[];
+for(let i=0;i<50;i++){ // number of KitKat stars
+    let star = document.createElement("img");
+    star.src = kitkatURL;
+    star.className = "kitkatStar";
+    star.style.left = Math.random()*window.innerWidth+"px";
+    star.style.top = Math.random()*window.innerHeight+"px";
+    star.style.animationDuration = (6 + Math.random()*6) + "s"; // random float speed
+    star.style.opacity = 0.3 + Math.random()*0.5; // random opacity
+    kitkatContainer.appendChild(star);
+    kitkatStarsArray.push(star);
+}
+
+// optional: animate sideways random movement
+kitkatStarsArray.forEach(star=>{
+    let startX = parseFloat(star.style.left);
+    let direction = Math.random()<0.5?-1:1;
+    setInterval(()=>{
+        let x = parseFloat(star.style.left);
+        x += 0.2*direction;
+        if(x<0) x=window.innerWidth;
+        if(x>window.innerWidth) x=0;
+        star.style.left = x+"px";
+    },50);
+});
+
+// resize handling
+window.addEventListener('resize',()=>{
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+});
+
+
+const music = document.getElementById('loveSong');
+const toggle = document.getElementById('musicToggle');
+
+toggle.addEventListener('click', ()=>{
+    if(music.paused){
+        music.play();
+        toggle.innerText = "Pause Music";
+    } else {
+        music.pause();
+        toggle.innerText = "Play Music";
+    }
+});
+
+
+</script>
+
+</body>
+</html>
