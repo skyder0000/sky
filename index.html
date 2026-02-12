@@ -40,6 +40,12 @@ font-weight:700;
 letter-spacing:-1px;
 }
 
+.sky {
+  font-size: 4rem;   /* Make it big */
+  font-weight: bold;
+  color: #ff4d6d;    /* Optional: romantic pink */
+}
+
 p{
 max-width:700px;
 margin-top:20px;
@@ -232,7 +238,7 @@ canvas{
 <div id="kitkatStars"></div>
 
 <section class="hero">
-<h1 class="fade-in">Happy Valentine's day Sky.</h1>
+<h1 class="fade-in">Happy Valentine's day!<br><span class="sky">Sky</span></h1>
 <p class="fade-in">From a random Discord server...  
 to being paracetamol of my life.</p>
 <button onclick="scrollToSection()">Begin Our Story</button>
@@ -302,7 +308,7 @@ Zero doubt.
 </section>
 
 <div class="hidden-letter" id="letterBox">
-<h1>Only for Sky</h1>
+<h1>Only for <span class="sky">Sky</span></h1>
 <p>Enter our secret word.</p>
 <input type="password" id="secretInput" placeholder="Secret">
 <button onclick="checkSecret()">Unlock</button>
@@ -495,3 +501,4 @@ toggle.addEventListener('click', ()=>{
 
 </body>
 </html>
+
