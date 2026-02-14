@@ -5,24 +5,75 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>For Sky</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Tangerine:wght@700&display=swap" rel="stylesheet">
 
 <style>
 
 
 *{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Inter',sans-serif;
-scroll-behavior:smooth;
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Inter',sans-serif;
+  scroll-behavior:smooth;
 }
+
+ 
 
 body{
 background:#000;
 color:white;
 overflow-x:hidden;
 }
+
+/* This makes the background react to her touch */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(255, 255, 255, 0.15) 0%, transparent 20%);
+    pointer-events: none;
+    z-index: -1; /* Right behind the content, but above the black void */
+}
+
+.giant-star {
+    position: fixed;
+    top: 50%;
+    right: 8%;
+    width: 40px;
+    height: 40px;
+    background-color: #ffffff !important; /* Force pure white */
+    border-radius: 50%;
+    /* Increased glow intensity */
+    box-shadow: 
+        0 0 20px #fff, 
+        0 0 40px #fff, 
+        0 0 70px #fff; 
+    pointer-events: none;
+    z-index: 9999; /* Higher than everything else */
+    display: block !important; 
+    animation: twinkle 2s ease-in-out infinite alternate;
+}
+/* Add this right after your .giant-star css */
+@keyframes twinkle {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+        box-shadow: 0 0 20px white, 0 0 40px white, 0 0 60px white;
+    }
+    100% {
+        transform: scale(0.9); /* shrink slightly */
+        opacity: 0.7;          /* dim slightly */
+        box-shadow: 0 0 10px white, 0 0 20px white, 0 0 30px white; /* reduce glow */
+    }
+}
+
+
+
+
 
 section{
 min-height:100vh;
@@ -150,6 +201,44 @@ top:25px;
 left:-8px;
 }
 
+.symbolism-reveal {
+    padding: 100px 20px;
+    background: transparent; /* Let the black sky show through */
+}
+
+.glass-box {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 50px;
+    background: rgba(255, 255, 255, 0.03); /* Barely there, like a mist */
+    backdrop-filter: blur(8px);
+    border-radius: 40px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+}
+
+.finale-text {
+    font-size: 1.3rem !important;
+    line-height: 1.8;
+    color: #e0e0e0 !important;
+    margin-bottom: 25px;
+    font-family: 'Inter', sans-serif;
+}
+
+.finale-text strong {
+    color: #ff4d6d; /* Romantic pink for your names */
+    letter-spacing: 1px;
+}
+
+.finale-heading {
+    font-family: 'Tangerine', cursive;
+    font-size: 3.5rem;
+    line-height: 1.2;
+    color: #fff;
+    margin-top: 40px;
+    text-shadow: 0 0 20px rgba(255, 77, 109, 0.6);
+}
+
 button{
 margin-top:30px;
 padding:12px 30px;
@@ -236,12 +325,38 @@ canvas{
 
 <canvas id="stars"></canvas>
 <div id="kitkatStars"></div>
-
+<div class="giant-star"></div>
 <section class="hero">
 <h1 class="fade-in">Happy Valentine's day!<br><span class="sky">Sky</span></h1>
 <p class="fade-in">From a random Discord server...  
 to being paracetamol of my life.</p>
 <button onclick="scrollToSection()">Begin Our Story</button>
+</section>
+
+<section class="symbolism-reveal">
+    <div class="glass-box fade-in">
+        <p style="color: #666; font-size: 0.9rem; margin-bottom: 20px; font-style: italic;">
+    (Look past the words, into the darkness... that is you.)
+</p>
+        <p class="finale-text">
+            In this space, the black void isn’t emptiness—it is the <strong>Sky</strong>, a reflection of you. 
+            Vast, beautiful, and infinite, it is the only place I belong. I am that giant twinkling star, 
+            <strong>Skyder</strong>, placed right in the heart of your atmosphere. I’m here to be your constant, 
+            glancing at you even when the world goes quiet. 
+        </p>
+        
+        <p class="finale-text">
+            Because you asked for trucks of KitKats, I’ve scattered them across your horizon, 
+            mixing their sweetness with my affection, so that every time you look up, 
+            you feel how deeply you are loved.
+        </p>
+
+        <h2 class="finale-heading">
+            You are my angel, and as long as there is a Sky, this star named Skyder will be there 
+            to remind you that you are my home. I am your witness, your protector, and your greatest admirer. 
+            You belong to heaven, yet thank you for sharing your sky with me.
+        </h2>
+    </div>
 </section>
 
 <section>
@@ -301,8 +416,8 @@ And your laugh feels like home.
 <h1 class="fade-in">Distance</h1>
 <p class="fade-in">
 Nepal 🇳🇵 ❤️ Indonesia 🇮🇩  
-Thousands of kilometers.  
-Zero doubt.
+<br> Thousands of Kilometers far though very close from heart. <br>
+Different time zone but, not heartbeat.
 </p>
 <button onclick="openLetter()">Unlock Something Private</button>
 </section>
@@ -311,10 +426,12 @@ Zero doubt.
 <h1>Only for <span class="sky">Sky</span></h1>
 <p>Enter our secret word.</p>
 <input type="password" id="secretInput" placeholder="Secret">
-<button onclick="checkSecret()">Unlock</button>
+<button onclick="checkSecret()">Unlock My Heart</button>
 <p id="wrongMsg" style="margin-top:10px;color:red;"></p>
 <div id="realLetter" style="display:none;margin-top:30px;max-width:600px;">
 <h2>Sayangku,</h2>
+<p> You are the Sky—infinite and enough. And as long as I am Skyder, 
+    I will be the star that never sets on you. Thank you for sharing your heaven with me.</p> <br>
 <p>
 I don’t need social media to show you off.  
 I don’t need distance to define us.  
@@ -325,6 +442,7 @@ Stay with me.
 Through time zones.  
 Through silence.  
 Through everything.
+I love you for eternity.
 </p>
 <p style="margin-top:20px;">— Skyder</p>
 </div>
@@ -335,7 +453,7 @@ Through everything.
   Your browser does not support the audio element.
 </audio>
 
-<button id="musicToggle" style="position:fixed;top:20px;right:20px;padding:10px 20px;border-radius:50px;border:none;background:pink;color:white;cursor:pointer;z-index:1000;">Play Music</button>
+<button id="musicToggle" style="position:fixed;top:20px;right:20px;padding:10px 20px;border-radius:50px;border:none;background:rgb(194, 31, 58);color:white;cursor:pointer;z-index:1000;">Play Music</button>
 
 
 <footer>
@@ -496,9 +614,12 @@ toggle.addEventListener('click', ()=>{
     }
 });
 
+window.addEventListener('mousemove', (e) => {
+    document.body.style.setProperty('--x', e.clientX + 'px');
+    document.body.style.setProperty('--y', e.clientY + 'px');
+});
 
 </script>
 
 </body>
 </html>
-
